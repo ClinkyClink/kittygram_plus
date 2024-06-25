@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 import webcolors
 
-from .models import Cat, Owner, Achievement, AchievementCat
+from .models import Cat, Owner, Achievement, AchievementCat, CHOICES
 
 
 class Hex2NameColor(serializers.Field):
@@ -65,6 +65,14 @@ class CatSerializer(serializers.ModelSerializer):
             AchievementCat.objects.create(
                 achievement=current_achievement, cat=cat)
         return cat 
+
+
+class CatListSerializer(serializers.ModelSerializer):
+    color = serializers.ChoiceField(choices=CHOICES)
+    
+    class Meta:
+        model = Cat
+        fields = ('id', 'name', 'color') 
 
 
 class OwnerSerializer(serializers.ModelSerializer):
